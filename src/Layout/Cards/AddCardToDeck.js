@@ -22,7 +22,7 @@ export const AddCardToDeck = () => {
             error => console.log(error)
         )
         return () => abortController.abort();
-    }, [deckId]);
+    }, [deckId, readDeck]);
 
     const handleCardChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});

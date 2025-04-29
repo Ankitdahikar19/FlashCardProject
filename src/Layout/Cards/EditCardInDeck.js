@@ -11,20 +11,24 @@ export const EditCardInDeck = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({})
 
-    useEffect( () => {
+    useEffect(() => {
         const abortController = new AbortController();
-        readDeck(deckId, abortController.signal).then(response => {
-            setDeck(response)
-        }).catch(
-            error => console.log(error)
-        )
-        readCard(cardId, abortController.signal).then(response => {
-            setFormData(response)
-        }).catch(
-            error => console.log(error)
-        )
+    
+        async function fetchData() {
+            try {
+                const [deckData, cardData] = await Promise.all([
+                    readDeck(deckId, abortController.signal),
+                    readCard(cardId, abortController.signal),
+                ]);
+                setDeck(deckData);
+                setFormData(cardData);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
         return () => abortController.abort();
-    }, [deckId, cardId]);
+    }, [deckId, cardId]);    
 
     const handleCardChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});

@@ -7,7 +7,7 @@ import React from "react";
 export const DeckEdit = () => {
     const { deck } = useOutletContext(); // Access shared deck state
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState(deck || {})
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
@@ -25,9 +25,9 @@ export const DeckEdit = () => {
         return () => abortController.abort();
     }
 
-    useEffect( () => {
-        setFormData(deck);
-    }, [deck]);
+    // useEffect( () => {
+    //     setFormData(deck);
+    // }, [deck]);
     return(
         <>
             <Header/>
@@ -42,7 +42,7 @@ export const DeckEdit = () => {
                         Name
                         <br/>
                         <input type='text' id='name' name='name' size='50'
-                               onChange={handleChange} value={formData.name}/>
+                               onChange={handleChange} value={formData.name || ''}/>
                     </label>
                     <br/>
                     <br/>
@@ -50,7 +50,7 @@ export const DeckEdit = () => {
                         Description
                         <br/>
                         <textarea id='description' name='description' rows="5" cols="50"
-                                  onChange={handleChange} value={formData.description}/>
+                                  onChange={handleChange} value={formData.description || ''}/>
                     </label>
                     <div>
                         <button type='reset' onClick={() => navigate(`/decks/${deck.id}`)} className='button-link cancel'>Cancel</button>

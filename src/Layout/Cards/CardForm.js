@@ -11,7 +11,7 @@ export const CardForm = ({handleCardSubmit, formData, handleCardChange, deckId})
             </label>
             <br/>
             <br/>
-            <label htmlFor='back'>Front
+            <label htmlFor='back'>Back
                 <br/>
                 <textarea id='back' name='back' rows='4' cols='50' placeholder='Back side of card'
                           onChange={handleCardChange} value={formData.back}/>
